@@ -8,16 +8,6 @@ import EventList from "../../EventList/EventList.jsx";
 import { fetchEvents } from "../../../Api/events-api.js";
 
 export default function HomePage() {
-  const [todos, setTodos] = useState([
-    { title: "Do something", id: 1 },
-    { title: "Do something 2", id: 2 },
-    { title: "Do something 3", id: 3 },
-    { title: "Do something", id: 4 },
-    { title: "Do something 2", id: 5 },
-    { title: "Do something 3", id: 6 },
-    { title: "Do something 2", id: 7 },
-    { title: "Do something 3", id: 8 },
-  ]);
   const [events, setEvents] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
@@ -47,7 +37,9 @@ export default function HomePage() {
     <>
       <Section>
         <Container>
-          <EventList todos={todos} events={events} />
+          {events.length > 0 && !isLoading && !isError && (
+            <EventList events={events} />
+          )}
         </Container>
       </Section>
     </>

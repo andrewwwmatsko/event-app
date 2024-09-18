@@ -2,7 +2,7 @@
   box-sizing: border-box;
   padding: 40px 32px;
   background-color: var(--color-light);
-  border-radius: 8px;
+  border-radius: 24px;
 
   position: relative;
   height: 50%;
@@ -55,10 +55,10 @@
 }
 
 .register {
-  display: block;
+  display: inline-block;
+  width: 160px;
   background-color: #151730;
   color: #fbf9ff;
-  width: 160px;
   padding: 9px 48px;
   border-radius: 100px;
   cursor: pointer;
