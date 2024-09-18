@@ -1,43 +1,84 @@
 .box {
-  padding: 40px;
+  box-sizing: border-box;
+  padding: 40px 32px;
   background-color: var(--color-light);
   border-radius: 8px;
 
-  color: var(--color-gray);
-  box-shadow: var(--shadow-regular);
-
   position: relative;
   height: 50%;
-  width: 250px;
+  height: 386px;
+  width: 416px;
   margin-bottom: 20px;
+  transition: box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.button {
-  position: absolute;
-
-  right: 0;
-
-  padding: 20px;
-  transition: transform var(--animation-cubicBezier);
-}
-.button:hover,
-.button:focus {
-  transform: scale(1.05);
+.box:hover {
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
-.button:disabled {
-  color: var(--color-gray);
-  pointer-events: none;
+.topPart {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 80px;
+  margin-bottom: 32px;
+}
+.date,
+.organizer {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 4px;
+  font-weight: 500;
+  line-height: 22px;
 }
 
-.deleteButton {
-  composes: button;
-  top: 0;
-  color: var(--color-red);
+.info {
+  height: 178px;
+  margin-bottom: 32px;
+}
+.title {
+  font-size: 44px;
+  font-weight: 500;
+  line-height: 48px;
+  margin-bottom: 16px;
 }
 
-.editButton {
-  composes: button;
-  bottom: 0;
-  color: var(--color-lightBlue);
+.description {
+  line-height: 22px;
+}
+
+.btnGroup {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.register {
+  display: block;
+  background-color: #151730;
+  color: #fbf9ff;
+  width: 160px;
+  padding: 9px 48px;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.register:hover {
+  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.3),
+    0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+}
+
+.view {
+  display: block;
+  border-radius: 100px;
+  cursor: pointer;
+  background-color: transparent;
+  color: #151730;
+  padding: 9px 29px;
+  border: 1px solid #151730;
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.view:hover {
+  background-color: rgba(103, 80, 164, 0.08);
 }

@@ -12,6 +12,7 @@ body {
     sans-serif;
   background: linear-gradient(to bottom, #c9d6ff, #e2e2e2);
   min-height: 100vh;
+  font-size: 16px;
 
   font-style: normal;
 }
