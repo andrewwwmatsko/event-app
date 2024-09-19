@@ -15,3 +15,12 @@ export const getEventById = async (eventId) => {
 
   return response.data.data;
 };
+
+export const registerUser = async (eventId, payload) => {
+  const response = await axios.post(
+    `https://elif-tech-be.onrender.com/events/${eventId}`,
+    payload
+  );
+
+  return response.data;
+};

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 
-import Filter from "../../components/Filter/Filter.jsx";
+// import Filter from "../../components/Filter/Filter.jsx";
 import Container from "../../components/Container/Container.jsx";
 import Section from "../../components/Section/Section.jsx";
 import EventList from "../../components/EventList/EventList.jsx";
@@ -13,8 +13,6 @@ export default function HomePage() {
   const [events, setEvents] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-
-  // const [search, setSearch] = useState("");
 
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);

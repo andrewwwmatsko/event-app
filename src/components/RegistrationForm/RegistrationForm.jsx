@@ -1,4 +1,4 @@
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { useId } from "react";
 
@@ -8,7 +8,7 @@ import { BiSolidCalendar } from "react-icons/bi";
 
 import css from "./RegistrationField.module.css";
 
-export default function RegistrationForm() {
+export default function RegistrationForm({ handleRegister }) {
   const fullNameId = useId();
   const emailId = useId();
   const dateOfBirthId = useId();
@@ -16,8 +16,8 @@ export default function RegistrationForm() {
   const initialValues = {
     fullName: "",
     email: "",
-    dateOfBirth: "",
-    backgroundInfo: "Found yourself",
+    birthDate: "",
+    backgroundInfo: "Found myself",
   };
 
   const registerSchema = Yup.object().shape(
@@ -33,18 +33,19 @@ export default function RegistrationForm() {
         .max(50, "Too Long!")
         .required()
         .trim(),
-      dateOfBirth: Yup.date().min(new Date(1920, 0, 1)).required(),
+      birthDate: Yup.date().min(new Date(1920, 0, 1)).required(),
       backgroundInfo: Yup.string().oneOf([
         "Social media",
         "Friends",
-        "Found yourself",
+        "Found myself",
       ]),
     },
     { strict: true }
   );
 
   const handleSubmit = (values, action) => {
-    console.log(values);
+    console.log("handleSubmit ~ values:", values);
+    handleRegister(values);
     action.resetForm();
   };
 
@@ -98,7 +99,7 @@ export default function RegistrationForm() {
                 errors.dateOfBirth && touched.dateOfBirth ? css.errorInput : ""
               }`}
               id={dateOfBirthId}
-              name="dateOfBirth"
+              name="birthDate"
               placeholder="2000-12-12"
             />
 
@@ -140,10 +141,10 @@ export default function RegistrationForm() {
                 <Field
                   type="radio"
                   name="backgroundInfo"
-                  value="Found yourself"
+                  value="Found myself"
                   className={css.radioBtn}
                 />
-                Found yourself
+                Found myself
               </label>
             </div>
           </div>

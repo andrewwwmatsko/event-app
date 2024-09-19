@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 import { BiSolidCalendar } from "react-icons/bi";
 import { FaBullhorn } from "react-icons/fa6";
@@ -8,13 +8,15 @@ import { PiClockFill } from "react-icons/pi";
 import Section from "../../components/Section/Section.jsx";
 import Container from "../../components/Container/Container.jsx";
 
-import { getEventById } from "../../Api/events-api.js";
+import { getEventById, registerUser } from "../../Api/events-api.js";
 import Loader from "../../components/Loader/Loader.jsx";
 
 import { formatDate, formatTime } from "../../helpers/formatDate.js";
+import { failedToast, makeToast } from "../../helpers/toasts.js";
 
 import css from "./RegisterPage.module.css";
 import RegistrationForm from "../../components/RegistrationForm/RegistrationForm.jsx";
+import { Toaster } from "react-hot-toast";
 
 export default function RegisterPage() {
   const [event, setEvent] = useState(null);
@@ -26,6 +28,16 @@ export default function RegisterPage() {
   // const backLinfRef = useRef(location.state ?? "/events");
 
   const { eventId } = useParams();
+
+  const handleRegister = async (payload) => {
+    try {
+      await registerUser(eventId, payload);
+      makeToast("Registered!", "✅");
+    } catch (error) {
+      failedToast("Something went wrong...");
+      throw new Error(error);
+    }
+  };
 
   useEffect(() => {
     const getEvent = async () => {
@@ -87,7 +99,7 @@ export default function RegisterPage() {
                     and growth opportunities. Don’t miss your chance!
                   </p>
 
-                  <RegistrationForm />
+                  <RegistrationForm handleRegister={handleRegister} />
                 </div>
               </div>
             </>
@@ -98,6 +110,7 @@ export default function RegisterPage() {
             </div>
           )}
         </Container>
+        <Toaster position="top-center" reverseOrder={false} />
       </Section>
     </main>
   );
