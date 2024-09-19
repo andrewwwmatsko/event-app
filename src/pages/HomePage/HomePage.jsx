@@ -63,10 +63,10 @@ export default function HomePage() {
     handleSortEvents();
   }, [sortBy, page, sortOrder]);
 
-  useEffect(() => {
-    const fetchEventByName = async (search) => {};
-    fetchEventByName();
-  }, [search]);
+  // useEffect(() => {
+  //   const fetchEventByName = async (search) => {};
+  //   fetchEventByName();
+  // }, [search]);
 
   return (
     <main>
@@ -74,7 +74,7 @@ export default function HomePage() {
         <Container>
           <div>
             <h1 className={css.pageTitle}>Events</h1>
-            <SearchBox />
+            <SearchBox setSearch={setSearch} />
 
             {events.length > 0 && !isLoading && !isError && (
               <>

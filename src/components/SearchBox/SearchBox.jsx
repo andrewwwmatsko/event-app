@@ -2,12 +2,16 @@ import { IoSearchOutline } from "react-icons/io5";
 
 import css from "./SearchBox.module.css";
 
-export default function SearchBox() {
-  const handleSubmit = () => {};
+export default function SearchBox({ setSearch }) {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const inputValue = e.target.elements.search.value.trim();
+    setSearch(inputValue);
+  };
 
   return (
     <div className={css.formWrapper}>
-      <form className={css.form}>
+      <form className={css.form} onSubmit={handleSubmit}>
         <input
           type="text"
           name="search"
