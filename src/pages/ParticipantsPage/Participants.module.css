@@ -13,7 +13,6 @@
   max-width: 253px;
   margin: 0 auto;
   margin-bottom: 52px;
-  margin-top: 50px;
 }
 
 .searchWrapper {
@@ -46,4 +45,15 @@
   top: 8px;
   left: 32px;
   pointer-events: none;
+}
+
+.resultParagraph {
+  color: #000;
+  font-family: Inter;
+  font-size: 18px;
+  line-height: 24px;
+}
+
+.filterResult {
+  font-weight: 500;
 }

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { fetchParticipants } from "../../Api/events-api.js";
 import { useParams } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
@@ -14,7 +14,7 @@ import ParticipantList from "../../components/ParticipantList/ParticipantList.js
 
 import css from "./Participants.module.css";
 
-export default function ParticipantsPage(params) {
+export default function ParticipantsPage() {
   const [participants, setParticipants] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -22,6 +22,14 @@ export default function ParticipantsPage(params) {
   const [filter, setFilter] = useState("");
 
   const { eventId } = useParams();
+
+  const filteredParticipants = useMemo(() => {
+    return participants.filter(
+      (participant) =>
+        participant.fullName.toLowerCase().includes(filter.toLowerCase()) ||
+        participant.email.toLowerCase().includes(filter.toLowerCase())
+    );
+  }, [participants, filter]);
 
   useEffect(() => {
     const getParticipants = async () => {
@@ -57,8 +65,14 @@ export default function ParticipantsPage(params) {
             />
           </div>
 
+          {filter && (
+            <p className={css.resultParagraph}>
+              Results for <span className={css.filterResult}>{filter}</span>:
+            </p>
+          )}
+
           {participants.length > 1 && (
-            <ParticipantList participants={participants} />
+            <ParticipantList participants={filteredParticipants} />
           )}
 
           {isLoading && (
