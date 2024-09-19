@@ -45,7 +45,7 @@ export default function HomePage() {
       <Section>
         <Container>
           <div>
-            <MySelect />
+            <MySelect setEvents={setEvents} page={page} />
             {events.length > 0 && !isLoading && !isError && (
               <EventList events={events} />
             )}

@@ -1,8 +1,8 @@
 import axios from "axios";
 
-export const fetchEvents = async (page) => {
+export const fetchEvents = async (page, options = {}) => {
   const response = await axios.get("https://elif-tech-be.onrender.com/events", {
-    params: { page, perPage: 12 },
+    params: { page, perPage: 12, ...options },
   });
 
   return response.data.data;
