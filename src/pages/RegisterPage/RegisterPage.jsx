@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
 
 import { BiSolidCalendar } from "react-icons/bi";
-import { FaBullhorn } from "react-icons/fa6";
 import { PiClockFill } from "react-icons/pi";
 
 import Section from "../../components/Section/Section.jsx";
@@ -14,9 +14,11 @@ import Loader from "../../components/Loader/Loader.jsx";
 import { formatDate, formatTime } from "../../helpers/formatDate.js";
 import { failedToast, makeToast } from "../../helpers/toasts.js";
 
-import css from "./RegisterPage.module.css";
 import RegistrationForm from "../../components/RegistrationForm/RegistrationForm.jsx";
-import { Toaster } from "react-hot-toast";
+
+import Icon from "../../icons/loudspeaker.svg";
+
+import css from "./RegisterPage.module.css";
 
 export default function RegisterPage() {
   const [event, setEvent] = useState(null);
@@ -82,7 +84,7 @@ export default function RegisterPage() {
                       </span>
                     </p>
                     <p className={css.organizer}>
-                      <FaBullhorn size={24} /> Organizer:
+                      <img src={Icon} alt="icon" /> Organizer:
                       <span className={css.text}> {event.organizer}</span>
                     </p>
                   </div>

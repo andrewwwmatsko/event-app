@@ -1,11 +1,12 @@
 import { BiSolidCalendar } from "react-icons/bi";
-import { FaBullhorn } from "react-icons/fa6";
 import { Link, useLocation } from "react-router-dom";
 
 import { formatDate } from "../../helpers/formatDate.js";
 import { cutText } from "../../helpers/cutText.js";
 
 import css from "./Event.module.css";
+
+import Icon from "../../icons/loudspeaker.svg";
 
 export default function Event({ event }) {
   const location = useLocation();
@@ -18,7 +19,7 @@ export default function Event({ event }) {
           {formatDate(event.date)}
         </p>
         <p className={css.organizer}>
-          <FaBullhorn size={18} /> {event.organizer}
+          <img src={Icon} alt="icon" /> {event.organizer}
         </p>
       </div>
 

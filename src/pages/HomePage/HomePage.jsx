@@ -8,6 +8,7 @@ import Container from "../../components/Container/Container.jsx";
 import Section from "../../components/Section/Section.jsx";
 import EventList from "../../components/EventList/EventList.jsx";
 import { fetchEvents } from "../../Api/events-api.js";
+import MySelect from "../../components/MySelect/MySelect.jsx";
 
 export default function HomePage() {
   const [events, setEvents] = useState([]);
@@ -44,7 +45,7 @@ export default function HomePage() {
       <Section>
         <Container>
           <div>
-            {/* <Filter /> */}
+            <MySelect />
             {events.length > 0 && !isLoading && !isError && (
               <EventList events={events} />
             )}
