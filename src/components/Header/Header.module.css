@@ -1,11 +1,10 @@
 .header {
   padding: 20px 0;
 
-  background-color: #fff;
+  background-color: #a59bd8;
 
-  box-shadow: var(--shadow-regular);
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
+  box-shadow: var(--shadow-small);
+  border-radius: 0px 0px 24px 24px;
 }
 
 .nav {
@@ -15,9 +14,11 @@
 }
 
 .title {
-  color: var(--color-dark);
-  font-size: var(--font-medium);
-  font-weight: 700;
+  color: #fff;
+  text-align: center;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 900;
+  line-height: 40px;
   text-transform: uppercase;
-  margin-left: 150px;
 }

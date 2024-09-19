@@ -6,7 +6,7 @@ export default function Header() {
     <header className={css.header}>
       <Container>
         <nav className={css.nav}>
-          <h3 className={css.title}>Event calendar</h3>
+          <h3 className={css.title}>SmartEvents</h3>
         </nav>
       </Container>
     </header>
