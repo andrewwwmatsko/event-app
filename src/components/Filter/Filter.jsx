@@ -1,18 +1,16 @@
-import { TextField } from "@mui/material";
+import css from "./Filter.module.css";
 
 export default function Filter() {
   return (
-    <TextField
-      id="outlined-controlled"
-      label="Search"
-      value=""
-      onChange={() => {}}
-      sx={{
-        display: "block",
-        width: "200px",
-        margin: "0 auto",
-        marginBottom: "20px",
-      }}
-    />
+    <div className={css.formWrapper}>
+      <form>
+        <input
+          type="text"
+          name="search"
+          className={css.input}
+          placeholder="Search event by name"
+        />
+      </form>
+    </div>
   );
 }

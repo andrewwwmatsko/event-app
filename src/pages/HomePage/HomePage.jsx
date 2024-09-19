@@ -3,15 +3,18 @@ import { useEffect, useState } from "react";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 
-import Container from "../../Container/Container.jsx";
-import Section from "../../Section/Section.jsx";
-import EventList from "../../EventList/EventList.jsx";
-import { fetchEvents } from "../../../Api/events-api.js";
+import Filter from "../../components/Filter/Filter.jsx";
+import Container from "../../components/Container/Container.jsx";
+import Section from "../../components/Section/Section.jsx";
+import EventList from "../../components/EventList/EventList.jsx";
+import { fetchEvents } from "../../Api/events-api.js";
 
 export default function HomePage() {
   const [events, setEvents] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
+
+  // const [search, setSearch] = useState("");
 
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -39,12 +42,15 @@ export default function HomePage() {
   }, [page]);
 
   return (
-    <>
+    <main>
       <Section>
         <Container>
-          {events.length > 0 && !isLoading && !isError && (
-            <EventList events={events} />
-          )}
+          <div>
+            {/* <Filter /> */}
+            {events.length > 0 && !isLoading && !isError && (
+              <EventList events={events} />
+            )}
+          </div>
 
           <Stack
             spacing={2}
@@ -52,18 +58,28 @@ export default function HomePage() {
               display: "block",
               margin: "0 auto",
               width: 400,
+              marginTop: "auto",
             }}
           >
             <Pagination
               count={totalPages}
               variant="outlined"
-              shape="rounded"
               page={page}
               onChange={handlePageChange}
+              color="primary"
+              sx={{
+                "& .Mui-selected": {
+                  backgroundColor: "#151730",
+                  color: "#fbf9ff",
+                  "&:hover": {
+                    backgroundColor: "#151730",
+                  },
+                },
+              }}
             />
           </Stack>
         </Container>
       </Section>
-    </>
+    </main>
   );
 }
