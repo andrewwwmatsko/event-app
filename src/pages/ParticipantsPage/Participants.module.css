@@ -1,0 +1,49 @@
+.loader {
+  display: block;
+  margin: 30vh auto;
+  width: 150px;
+}
+
+.title {
+  font-family: Inter;
+  color: #151730;
+  font-size: 44px;
+  font-weight: 500;
+  line-height: 48px;
+  max-width: 253px;
+  margin: 0 auto;
+  margin-bottom: 52px;
+  margin-top: 50px;
+}
+
+.searchWrapper {
+  position: relative;
+  max-width: 416px;
+  margin: 0 auto;
+  margin-bottom: 58px;
+}
+
+.search {
+  width: 416px;
+  height: 40px;
+  padding: 0px 64px;
+
+  border-radius: 100px;
+  border: 1px solid #151730;
+  background: #fff;
+}
+
+.search::placeholder {
+  color: #ababab;
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 140%;
+}
+
+.searchIcon {
+  position: absolute;
+  top: 8px;
+  left: 32px;
+  pointer-events: none;
+}

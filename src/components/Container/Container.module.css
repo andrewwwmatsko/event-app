@@ -3,8 +3,3 @@
   padding: 0 20px;
   margin: 0 auto;
 }
-
-.flex {
-  display: flex;
-  flex-direction: column;
-}

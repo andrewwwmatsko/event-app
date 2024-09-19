@@ -6,10 +6,10 @@ export default function EventList({ events }) {
   return (
     <>
       <ul className={css.list}>
-        {events.map((event, index) => {
+        {events.map((event) => {
           return (
             <li key={event._id}>
-              <Event event={event} index={index + 1} />
+              <Event event={event} />
             </li>
           );
         })}
