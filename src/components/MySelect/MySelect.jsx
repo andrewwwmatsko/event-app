@@ -1,6 +1,4 @@
 import { FormControl, MenuItem, Select } from "@mui/material";
-import { useEffect, useState } from "react";
-import { fetchEvents } from "../../Api/events-api.js";
 
 const sortByValues = {
   title: "title",
@@ -12,28 +10,18 @@ const sortOrderValues = {
   desc: "desc",
 };
 
-export default function MySelect({ setEvents, page }) {
-  const [sortBy, setSortBy] = useState("");
-  const [sortOrder, setSortOrder] = useState("");
-
+export default function MySelect({
+  sortBy,
+  sortOrder,
+  setSortBy,
+  setSortOrder,
+}) {
   const handleChangeSortBy = (e) => {
     setSortBy(e.target.value);
   };
   const handleChangeSortOrder = (e) => {
     setSortOrder(e.target.value);
   };
-
-  useEffect(() => {
-    const handleSortEvents = async () => {
-      try {
-        const sortedEvents = await fetchEvents(page, { sortBy, sortOrder });
-        setEvents(sortedEvents.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    handleSortEvents();
-  }, [sortBy, page, setEvents, sortOrder]);
 
   return (
     <div style={{ marginBottom: "24px" }}>

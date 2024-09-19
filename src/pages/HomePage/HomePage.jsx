@@ -22,6 +22,9 @@ export default function HomePage() {
 
   const [search, setSearch] = useState("");
 
+  const [sortBy, setSortBy] = useState("");
+  const [sortOrder, setSortOrder] = useState("");
+
   const handlePageChange = (evt, value) => {
     setPage(value);
   };
@@ -48,6 +51,23 @@ export default function HomePage() {
     getEvents();
   }, [page]);
 
+  useEffect(() => {
+    const handleSortEvents = async () => {
+      try {
+        const sortedEvents = await fetchEvents(page, { sortBy, sortOrder });
+        setEvents(sortedEvents.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    handleSortEvents();
+  }, [sortBy, page, sortOrder]);
+
+  useEffect(() => {
+    const fetchEventByName = async (search) => {};
+    fetchEventByName();
+  }, [search]);
+
   return (
     <main>
       <Section>
@@ -58,7 +78,14 @@ export default function HomePage() {
 
             {events.length > 0 && !isLoading && !isError && (
               <>
-                <MySelect setEvents={setEvents} page={page} />
+                <MySelect
+                  setEvents={setEvents}
+                  page={page}
+                  sortBy={sortBy}
+                  setSortBy={setSortBy}
+                  sortOrder={sortOrder}
+                  setSortOrder={setSortOrder}
+                />
                 <EventList events={events} />
               </>
             )}
