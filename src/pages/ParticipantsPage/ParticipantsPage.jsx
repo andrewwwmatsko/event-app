@@ -71,7 +71,7 @@ export default function ParticipantsPage() {
             </p>
           )}
 
-          {participants.length > 1 && (
+          {participants.length > 0 && (
             <ParticipantList participants={filteredParticipants} />
           )}
 
