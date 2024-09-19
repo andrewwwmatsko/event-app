@@ -17,6 +17,7 @@ import css from "./Participants.module.css";
 export default function ParticipantsPage() {
   const [participants, setParticipants] = useState([]);
   const [filteredParticipants, setFilteredParticipants] = useState([]);
+
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
@@ -25,7 +26,7 @@ export default function ParticipantsPage() {
   const { eventId } = useParams();
 
   const caseFilteredParticipants = useCallback(() => {
-    if (!Array.isArray(participants) || participants !== undefined) return;
+    if (!Array.isArray(participants)) return;
     setFilteredParticipants(
       participants.filter(
         (participant) =>
@@ -53,8 +54,9 @@ export default function ParticipantsPage() {
   }, [eventId]);
 
   useEffect(() => {
+    if (participants.length < 1) return;
     caseFilteredParticipants();
-  }, [filter, caseFilteredParticipants]);
+  }, [filter, caseFilteredParticipants, participants]);
 
   return (
     <main>
@@ -77,11 +79,13 @@ export default function ParticipantsPage() {
 
           {filter && (
             <p className={css.resultParagraph}>
-              Results for <span className={css.filterResult}>{filter}</span>:
+              Results for `<span className={css.filterResult}>{filter}</span>`:
             </p>
           )}
 
-          {Array.isArray(participants) && participants.length > 0 ? (
+          {Array.isArray(participants) &&
+          participants.length > 0 &&
+          !isError ? (
             <ParticipantList participants={filteredParticipants} />
           ) : (
             <h2 className={css.noParticipants}>

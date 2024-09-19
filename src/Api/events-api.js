@@ -27,7 +27,7 @@ export const registerUser = async (eventId, payload) => {
 
 export const fetchParticipants = async (eventId) => {
   const response = await axios.get(
-    `http://localhost:3000/events/${eventId}/participants`
+    `https://elif-tech-be.onrender.com/events/${eventId}/participants`
   );
 
   return response.data.data;

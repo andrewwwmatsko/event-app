@@ -24,7 +24,6 @@ export default function MySelect({ setEvents, page }) {
   };
 
   useEffect(() => {
-    // if (!sortBy) return;
     const handleSortEvents = async () => {
       try {
         const sortedEvents = await fetchEvents(page, { sortBy, sortOrder });

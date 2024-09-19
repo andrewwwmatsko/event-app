@@ -3,12 +3,14 @@ import { useEffect, useState } from "react";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 
-// import Filter from "../../components/Filter/Filter.jsx";
 import Container from "../../components/Container/Container.jsx";
 import Section from "../../components/Section/Section.jsx";
 import EventList from "../../components/EventList/EventList.jsx";
 import { fetchEvents } from "../../Api/events-api.js";
 import MySelect from "../../components/MySelect/MySelect.jsx";
+import SearchBox from "../../components/SearchBox/SearchBox.jsx";
+
+import css from "./HomePage.module.css";
 
 export default function HomePage() {
   const [events, setEvents] = useState([]);
@@ -18,8 +20,14 @@ export default function HomePage() {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
+  const [search, setSearch] = useState("");
+
   const handlePageChange = (evt, value) => {
     setPage(value);
+  };
+
+  const handleSearch = (query) => {
+    setSearch();
   };
 
   useEffect(() => {
@@ -45,9 +53,14 @@ export default function HomePage() {
       <Section>
         <Container>
           <div>
-            <MySelect setEvents={setEvents} page={page} />
+            <h1 className={css.pageTitle}>Events</h1>
+            <SearchBox />
+
             {events.length > 0 && !isLoading && !isError && (
-              <EventList events={events} />
+              <>
+                <MySelect setEvents={setEvents} page={page} />
+                <EventList events={events} />
+              </>
             )}
           </div>
 
