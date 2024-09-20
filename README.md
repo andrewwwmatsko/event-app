@@ -34,5 +34,6 @@ You can register for your favorite events with ease, and it also provides the ab
 2. Run `npm install`;
 3. Run `npm run dev`;
 
+## 🔗 Check out the Back-end
 
-if you wish to check my back-end part, you are welcome: https://github.com/andrewwwmatsko/elif-tech-BE
+Feel free to explore the back-end code here: [GitHub Repository](https://github.com/andrewwwmatsko/elif-tech-BE)
