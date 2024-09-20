@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 
 import { BiSolidCalendar } from "react-icons/bi";
@@ -20,14 +20,18 @@ import Icon from "../../icons/loudspeaker.svg";
 
 import css from "./RegisterPage.module.css";
 import BackToButton from "../../components/BackToButton/BackToButton.jsx";
+import PageNotFound from "../PageNotFound/PageNotFound.jsx";
 
 export default function RegisterPage() {
   const [event, setEvent] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
+  const [isServerError, setIsServerError] = useState(false);
+  const [isInvalidIdError, setIsInvalidIdError] = useState(false);
 
   const location = useLocation();
   const backLinkRef = useRef(location.state ?? "/events");
+
+  const navigate = useNavigate();
 
   const { eventId } = useParams();
 
@@ -44,25 +48,32 @@ export default function RegisterPage() {
   useEffect(() => {
     const getEvent = async () => {
       try {
-        setIsError(false);
+        setIsServerError(false);
+        setIsInvalidIdError(false);
         setIsLoading(true);
         const event = await getEventById(eventId);
         setEvent(event);
       } catch (error) {
-        setIsError(true);
-        throw new Error(error.message);
+        if (error.status === 400) {
+          setIsInvalidIdError(true);
+        } else {
+          setIsServerError(true);
+        }
       } finally {
         setIsLoading(false);
       }
     };
     getEvent();
-  }, [eventId]);
+  }, [eventId, navigate]);
 
+  if (isInvalidIdError) {
+    return <PageNotFound />;
+  }
   return (
     <main>
       <Section>
         <Container>
-          {event && !isError && !isLoading && (
+          {event && !isServerError && !isLoading && (
             <>
               <BackToButton to={backLinkRef.current}>Back</BackToButton>
 
