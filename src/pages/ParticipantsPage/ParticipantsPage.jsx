@@ -55,7 +55,7 @@ export default function ParticipantsPage() {
   }, [eventId]);
 
   useEffect(() => {
-    if (participants.length < 1) return;
+    if (Array.isArray(participants) && participants.length < 1) return;
     caseFilteredParticipants();
   }, [filter, caseFilteredParticipants, participants]);
 

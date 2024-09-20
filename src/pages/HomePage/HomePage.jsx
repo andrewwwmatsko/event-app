@@ -11,6 +11,7 @@ import MySelect from "../../components/MySelect/MySelect.jsx";
 // import SearchBox from "../../components/SearchBox/SearchBox.jsx";
 
 import css from "./HomePage.module.css";
+import { useSearchParams } from "react-router-dom";
 
 export default function HomePage() {
   const [events, setEvents] = useState([]);
@@ -22,51 +23,44 @@ export default function HomePage() {
 
   // const [search, setSearch] = useState("");
 
-  const [sortBy, setSortBy] = useState("");
-  const [sortOrder, setSortOrder] = useState("");
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const handlePageChange = (evt, value) => {
     setPage(value);
   };
 
   // const handleSearch = (query) => {
-  //   setSearch();
+  //   setSearch(query);
   // };
 
   useEffect(() => {
+    const sortBy = searchParams.get("sortBy");
+    const sortOrder = searchParams.get("sortOrder");
+
+    let loadingTimeout;
+
     const getEvents = async () => {
       try {
-        setIsLoading(true);
         setIsError(false);
-        const response = await fetchEvents(page);
+        loadingTimeout = setTimeout(() => setIsLoading(true), 300);
+
+        const response = await fetchEvents(page, { sortBy, sortOrder });
+
         setEvents(response.data);
         setTotalPages(response.totalPages);
       } catch (error) {
         console.error(error.message);
-        setIsError(false);
+        setIsError(true);
       } finally {
+        clearTimeout(loadingTimeout);
         setIsLoading(false);
       }
     };
+
     getEvents();
-  }, [page]);
 
-  useEffect(() => {
-    const handleSortEvents = async () => {
-      try {
-        const sortedEvents = await fetchEvents(page, { sortBy, sortOrder });
-        setEvents(sortedEvents.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    handleSortEvents();
-  }, [sortBy, page, sortOrder]);
-
-  // useEffect(() => {
-  //   const fetchEventByName = async (search) => {};
-  //   fetchEventByName();
-  // }, [search]);
+    return () => clearTimeout(loadingTimeout);
+  }, [page, searchParams]);
 
   return (
     <main>
@@ -81,10 +75,8 @@ export default function HomePage() {
                 <MySelect
                   setEvents={setEvents}
                   page={page}
-                  sortBy={sortBy}
-                  setSortBy={setSortBy}
-                  sortOrder={sortOrder}
-                  setSortOrder={setSortOrder}
+                  setSearchParams={setSearchParams}
+                  searchParams={searchParams}
                 />
                 <EventList events={events} />
               </>

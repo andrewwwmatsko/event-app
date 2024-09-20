@@ -10,17 +10,17 @@ const sortOrderValues = {
   desc: "desc",
 };
 
-export default function MySelect({
-  sortBy,
-  sortOrder,
-  setSortBy,
-  setSortOrder,
-}) {
+export default function MySelect({ setSearchParams, searchParams }) {
+  const sortBy = searchParams.get("sortBy") ?? "";
+  const sortOrder = searchParams.get("sortOrder") ?? "";
+
   const handleChangeSortBy = (e) => {
-    setSortBy(e.target.value);
+    searchParams.set("sortBy", e.target.value);
+    setSearchParams(searchParams);
   };
   const handleChangeSortOrder = (e) => {
-    setSortOrder(e.target.value);
+    searchParams.set("sortOrder", e.target.value);
+    setSearchParams(searchParams);
   };
 
   return (
