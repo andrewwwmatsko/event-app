@@ -12,7 +12,7 @@ import { getEventById, registerUser } from "../../Api/events-api.js";
 import Loader from "../../components/Loader/Loader.jsx";
 
 import { formatDate, formatTime } from "../../helpers/formatDate.js";
-import { failedToast, makeToast } from "../../helpers/toasts.js";
+import { failedToast } from "../../helpers/toasts.js";
 
 import RegistrationForm from "../../components/RegistrationForm/RegistrationForm.jsx";
 
@@ -21,12 +21,15 @@ import Icon from "../../icons/loudspeaker.svg";
 import css from "./RegisterPage.module.css";
 import BackToButton from "../../components/BackToButton/BackToButton.jsx";
 import PageNotFound from "../PageNotFound/PageNotFound.jsx";
+import PopUp from "../../components/PopUp/PopUp.jsx";
 
 export default function RegisterPage() {
   const [event, setEvent] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isServerError, setIsServerError] = useState(false);
   const [isInvalidIdError, setIsInvalidIdError] = useState(false);
+
+  const [isOpenPopUp, setIsOpenPopUp] = useState(false);
 
   const location = useLocation();
   const backLinkRef = useRef(location.state ?? "/events");
@@ -38,7 +41,7 @@ export default function RegisterPage() {
   const handleRegister = async (payload) => {
     try {
       await registerUser(eventId, payload);
-      makeToast("Registered!", "✅");
+      setIsOpenPopUp(true);
     } catch (error) {
       if (error.status === 409) {
         failedToast("You are already registered");
@@ -135,6 +138,7 @@ export default function RegisterPage() {
             </div>
           )}
         </Container>
+        <PopUp isOpenPopUp={isOpenPopUp} setIsOpenPopUp={setIsOpenPopUp} />
         <Toaster position="top-center" reverseOrder={false} />
       </Section>
     </main>

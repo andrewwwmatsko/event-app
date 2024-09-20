@@ -9,6 +9,7 @@ import EventList from "../../components/EventList/EventList.jsx";
 import { fetchEvents } from "../../Api/events-api.js";
 import MySelect from "../../components/MySelect/MySelect.jsx";
 // import SearchBox from "../../components/SearchBox/SearchBox.jsx";
+import Loader from "../../components/Loader/Loader.jsx";
 
 import css from "./HomePage.module.css";
 import { useSearchParams } from "react-router-dom";
@@ -82,6 +83,11 @@ export default function HomePage() {
               </>
             )}
           </div>
+          {isLoading && (
+            <div className={css.loader}>
+              <Loader />
+            </div>
+          )}
 
           <Stack
             spacing={2}
