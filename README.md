@@ -1,16 +1,16 @@
-# React + Vite
+# 🌟 SmartEvents Application
 
-Accomplished level: MIDDLE
+**Accomplished level:** MIDDLE
 
-*Keep in mind that website uses a free backend resourse, so it may take a while for the server to "wake up".
+*Keep in mind that the website uses a free backend resource, so it may take a while for the server to "wake up."*
 
-# Upcoming Events Application
+## 🎉 Upcoming Events Application
 
 This application allows you to explore all upcoming events! 
 
 You can register for your favorite events with ease, and it also provides the ability to sort events by title, date, and organizer.
 
-## Tech Stack
+## 🛠 Tech Stack
 
 **Front-end:**
 - React
@@ -23,17 +23,13 @@ You can register for your favorite events with ease, and it also provides the ab
 - Express.js
 - MongoDB
 
-## Features
-- View a list of upcoming events
-- Register for events
-- Sort events by title, date, and organizer
+## ✨ Features
+- 👀 View a list of upcoming events
+- 📝 Register for events
+- 🔍 Sort events by title, date, and organizer
 
-## Installation
+## 🚀 Installation
 
-1) Clone repository;
-2) npm i
-3) npm run dev
-
-
-
-
+1. Clone the repository;
+2. Run `npm install`;
+3. Run `npm run dev`;
