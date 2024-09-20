@@ -40,8 +40,12 @@ export default function RegisterPage() {
       await registerUser(eventId, payload);
       makeToast("Registered!", "✅");
     } catch (error) {
-      failedToast("Something went wrong...");
-      throw new Error(error);
+      if (error.status === 409) {
+        failedToast("You are already registered");
+      } else {
+        failedToast("Something went wrong...");
+        throw new Error(error);
+      }
     }
   };
 

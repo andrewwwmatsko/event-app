@@ -48,7 +48,7 @@ export default function MySelect({ setSearchParams, searchParams }) {
         </Select>
       </FormControl>
 
-      <FormControl sx={{ m: 1, minWidth: 120, marginBottom: "24px" }}>
+      <FormControl sx={{ m: 1, minWidth: 180, marginBottom: "24px" }}>
         <Select
           value={sortOrder}
           onChange={handleChangeSortOrder}
@@ -63,7 +63,7 @@ export default function MySelect({ setSearchParams, searchParams }) {
           }}
         >
           <MenuItem value="">
-            <span>Sort Order</span>
+            <span>Sort order</span>
           </MenuItem>
           <MenuItem value={sortOrderValues.asc}>a-Z</MenuItem>
           <MenuItem value={sortOrderValues.desc}>Z-a</MenuItem>

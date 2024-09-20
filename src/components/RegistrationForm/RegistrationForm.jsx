@@ -1,6 +1,6 @@
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
-import { useId, useState } from "react";
+import { useId } from "react";
 
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -13,9 +13,9 @@ import { MdEmail } from "react-icons/md";
 
 import css from "./RegistrationField.module.css";
 
-export default function RegistrationForm({ handleRegister }) {
-  const [birthDateValue, setBirthDateValue] = useState(dayjs());
+const knowUsFromList = ["Social media", "Friends", "Found myself"];
 
+export default function RegistrationForm({ handleRegister }) {
   const fullNameId = useId();
   const emailId = useId();
   const dateOfBirthId = useId();
@@ -23,7 +23,7 @@ export default function RegistrationForm({ handleRegister }) {
   const initialValues = {
     fullName: "",
     email: "",
-    birthDate: birthDateValue,
+    birthDate: dayjs(),
     backgroundInfo: "Found myself",
   };
 
@@ -41,18 +41,18 @@ export default function RegistrationForm({ handleRegister }) {
         .required()
         .trim(),
       birthDate: Yup.date().min(new Date(1920, 0, 1)).required(),
-      backgroundInfo: Yup.string().oneOf([
-        "Social media",
-        "Friends",
-        "Found myself",
-      ]),
+      backgroundInfo: Yup.string().oneOf(knowUsFromList),
     },
     { strict: true }
   );
 
-  const handleSubmit = (values, action) => {
-    handleRegister(values);
-    action.resetForm();
+  const handleSubmit = async (values, action) => {
+    try {
+      await handleRegister(values);
+      action.resetForm();
+    } catch (error) {
+      console.error("Registration failed:", error);
+    }
   };
 
   return (
@@ -61,38 +61,79 @@ export default function RegistrationForm({ handleRegister }) {
       onSubmit={handleSubmit}
       validationSchema={registerSchema}
     >
-      {({ errors, touched, setFieldValue, values }) => (
+      {({ errors, touched, setFieldValue, setFieldTouched, values }) => (
         <Form noValidate>
           <div className={css.group}>
-            <label htmlFor={fullNameId} className={css.label}>
-              Full Name
-            </label>
-            <Field
-              className={`${css.input} ${
-                errors.fullName && touched.fullName ? css.errorInput : ""
-              }`}
+            <TextField
               id={fullNameId}
               name="fullName"
+              label="Full Name"
+              variant="outlined"
+              value={values.fullName}
               placeholder="John Doe"
+              error={Boolean(errors.fullName && touched.fullName)}
+              onChange={(e) => setFieldValue("fullName", e.target.value)}
+              onBlur={() => {
+                setFieldTouched("fullName", true);
+                if (!errors.fullName) {
+                  setFieldValue("fullName", values.fullName.trim());
+                }
+              }}
+              InputProps={{
+                endAdornment: <BsPersonFill size={24} />,
+              }}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": {
+                    borderColor:
+                      errors.fullName && touched.fullName ? "red" : "gray",
+                  },
+                  "&:hover fieldset": {
+                    borderColor:
+                      errors.fullName && touched.fullName ? "red" : "gray",
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor:
+                      errors.fullName && touched.fullName ? "red" : "blue",
+                  },
+                },
+              }}
             />
-
-            <BsPersonFill size={24} className={css.icon} />
           </div>
 
           <div className={css.group}>
-            <label htmlFor={emailId} className={css.label}>
-              Email
-            </label>
-            <Field
-              className={`${css.input} ${
-                errors.email && touched.email ? css.errorInput : ""
-              }`}
+            <TextField
               id={emailId}
               name="email"
+              label="Email"
+              variant="outlined"
+              value={values.email}
               placeholder="iwanttoElifTechSchool@email.com"
+              error={Boolean(errors.email && touched.email)}
+              onChange={(e) => setFieldValue("email", e.target.value)}
+              onBlur={() => {
+                setFieldTouched("email", true);
+                if (!errors.email) {
+                  setFieldValue("email", values.email.trim());
+                }
+              }}
+              InputProps={{
+                endAdornment: <MdEmail size={24} />,
+              }}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": {
+                    borderColor: errors.email && touched.email ? "red" : "gray",
+                  },
+                  "&:hover fieldset": {
+                    borderColor: errors.email && touched.email ? "red" : "gray",
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: errors.email && touched.email ? "red" : "blue",
+                  },
+                },
+              }}
             />
-
-            <MdEmail size={24} className={css.icon} />
           </div>
 
           <div className={css.group}>
@@ -105,7 +146,6 @@ export default function RegistrationForm({ handleRegister }) {
                 maxDate={dayjs()}
                 value={values.birthDate}
                 onChange={(newValue) => {
-                  setBirthDateValue(newValue);
                   setFieldValue("birthDate", newValue);
                 }}
                 textField={(params) => (
@@ -127,7 +167,7 @@ export default function RegistrationForm({ handleRegister }) {
 
           <div className={css.group}>
             <label
-              htmlFor="readio"
+              htmlFor="radio"
               id="my-radio-group"
               className={css.radioGroupLabel}
             >
@@ -138,33 +178,17 @@ export default function RegistrationForm({ handleRegister }) {
               aria-labelledby="my-radio-group"
               className={css.radioGroup}
             >
-              <label className={css.radioLabel}>
-                <Field
-                  type="radio"
-                  name="backgroundInfo"
-                  value="Social media"
-                  className={css.radioBtn}
-                />
-                Social media
-              </label>
-              <label className={css.radioLabel}>
-                <Field
-                  type="radio"
-                  name="backgroundInfo"
-                  value="Friends"
-                  className={css.radioBtn}
-                />
-                Friends
-              </label>
-              <label className={css.radioLabel}>
-                <Field
-                  type="radio"
-                  name="backgroundInfo"
-                  value="Found myself"
-                  className={css.radioBtn}
-                />
-                Found myself
-              </label>
+              {knowUsFromList.map((value) => (
+                <label key={value} className={css.radioLabel}>
+                  <Field
+                    type="radio"
+                    name="backgroundInfo"
+                    value={value}
+                    className={css.radioBtn}
+                  />
+                  {value}
+                </label>
+              ))}
             </div>
           </div>
 
