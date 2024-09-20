@@ -5,12 +5,11 @@ import { useId, useState } from "react";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { TextField, InputAdornment } from "@mui/material";
+import { TextField } from "@mui/material";
 import dayjs from "dayjs";
 
 import { BsPersonFill } from "react-icons/bs";
 import { MdEmail } from "react-icons/md";
-import { BiSolidCalendar } from "react-icons/bi";
 
 import css from "./RegistrationField.module.css";
 
@@ -112,7 +111,7 @@ export default function RegistrationForm({ handleRegister }) {
                 textField={(params) => (
                   <TextField
                     {...params}
-                    className={`${css.input} ${
+                    className={`${
                       errors.birthDate && touched.birthDate
                         ? css.errorInput
                         : ""
@@ -120,13 +119,6 @@ export default function RegistrationForm({ handleRegister }) {
                     id={dateOfBirthId}
                     name="birthDate"
                     error={Boolean(errors.birthDate && touched.birthDate)}
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <BiSolidCalendar size={24} className={css.icon} />
-                        </InputAdornment>
-                      ),
-                    }}
                   />
                 )}
               />

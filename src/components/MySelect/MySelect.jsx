@@ -40,7 +40,7 @@ export default function MySelect({ setSearchParams, searchParams }) {
           }}
         >
           <MenuItem value="">
-            <em>-</em>
+            <span>Sort By</span>
           </MenuItem>
           <MenuItem value={sortByValues.title}>By title</MenuItem>
           <MenuItem value={sortByValues.date}>By date</MenuItem>
@@ -63,7 +63,7 @@ export default function MySelect({ setSearchParams, searchParams }) {
           }}
         >
           <MenuItem value="">
-            <em>-</em>
+            <span>Sort Order</span>
           </MenuItem>
           <MenuItem value={sortOrderValues.asc}>a-Z</MenuItem>
           <MenuItem value={sortOrderValues.desc}>Z-a</MenuItem>

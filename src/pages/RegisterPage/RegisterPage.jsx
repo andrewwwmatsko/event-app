@@ -75,7 +75,9 @@ export default function RegisterPage() {
         <Container>
           {event && !isServerError && !isLoading && (
             <>
-              <BackToButton to={backLinkRef.current}>Back</BackToButton>
+              <BackToButton to={backLinkRef.current}>
+                Back to All Events
+              </BackToButton>
 
               <h1 className={css.pageTitle}>Event registration</h1>
 
