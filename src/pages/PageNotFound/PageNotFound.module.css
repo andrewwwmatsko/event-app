@@ -1,0 +1,41 @@
+.image {
+  margin: 0 auto;
+}
+
+.title {
+  color: #151730;
+  text-align: center;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 48px;
+  margin-bottom: 24px;
+}
+.subtitle {
+  color: #151730;
+  text-align: center;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 32px;
+  margin-bottom: 16px;
+}
+.text {
+  color: #151730;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 32px;
+  margin-bottom: 24px;
+}
+.link {
+  display: block;
+  border-radius: 100px;
+  background: #151730;
+  width: 320px;
+  margin: 0 auto;
+  color: #fbf9ff;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 140%;
+  padding: 10px 24px;
+}

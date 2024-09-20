@@ -14,6 +14,7 @@ const RegisterPage = lazy(() =>
 
 import css from "./App.module.css";
 import ForceNavigate from "../ForceNavigate/ForceNavigate.jsx";
+import PageNotFound from "../../pages/PageNotFound/PageNotFound.jsx";
 
 export default function App() {
   return (
@@ -35,7 +36,7 @@ export default function App() {
             path="/events/:eventId/participants"
             element={<ParticipantsPage />}
           />
-          <Route path="*" element={<p>Not found page</p>} />
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Suspense>
     </>
