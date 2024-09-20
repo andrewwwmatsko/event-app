@@ -66,7 +66,7 @@ export default function ParticipantsPage() {
     <main>
       <Section>
         <Container>
-          {Array.isArray(participants) && participants.length > 1 && (
+          {Array.isArray(participants) && participants.length >= 1 && (
             <BackToButton to={`/events/${eventId}`}>
               Go to Event registration
             </BackToButton>

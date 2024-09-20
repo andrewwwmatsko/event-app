@@ -102,6 +102,8 @@ export default function RegistrationForm({ handleRegister }) {
             </label>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
+                minDate={dayjs("1920-01-01")}
+                maxDate={dayjs()}
                 value={values.birthDate}
                 onChange={(newValue) => {
                   setBirthDateValue(newValue);
