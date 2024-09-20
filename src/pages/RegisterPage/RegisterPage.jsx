@@ -27,7 +27,7 @@ export default function RegisterPage() {
   const [isError, setIsError] = useState(false);
 
   const location = useLocation();
-  const backLinkRef = useRef(location.state ?? "/");
+  const backLinkRef = useRef(location.state ?? "/events");
 
   const { eventId } = useParams();
 

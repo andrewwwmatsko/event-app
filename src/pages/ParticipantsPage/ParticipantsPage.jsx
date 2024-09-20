@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { fetchParticipants } from "../../Api/events-api.js";
-import { useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 
 import { IoSearchOutline } from "react-icons/io5";
@@ -25,6 +25,9 @@ export default function ParticipantsPage() {
   const [filter, setFilter] = useState("");
 
   const { eventId } = useParams();
+
+  const location = useLocation();
+  const backLinkRef = useRef(location.state ?? "/events");
 
   const caseFilteredParticipants = useCallback(() => {
     if (!Array.isArray(participants)) return;
@@ -63,9 +66,12 @@ export default function ParticipantsPage() {
     <main>
       <Section>
         <Container>
-          <BackToButton to={`/events/${eventId}`}>
-            Go to Event registration
-          </BackToButton>
+          {Array.isArray(participants) && participants.length > 1 && (
+            <BackToButton to={`/events/${eventId}`}>
+              Go to Event registration
+            </BackToButton>
+          )}
+
           <h1 className={css.title}>Participants</h1>
 
           {Array.isArray(participants) && participants.length > 0 && (
@@ -92,9 +98,30 @@ export default function ParticipantsPage() {
           !isError ? (
             <ParticipantList participants={filteredParticipants} />
           ) : (
-            <h2 className={css.noParticipants}>
-              There are no participants yet. Be the first one!
-            </h2>
+            <div className={css.noParticipantsWrapper}>
+              <h2 className={css.noParticipantsTitle}>
+                There are no participants yet.
+              </h2>
+              <p className={css.noParticipantsText}>
+                It seems that people cannot dare to be the first. But we are
+                here to have fun and develop, so be the pioneer.
+              </p>
+              <p className={css.noParticipantsSlogan}>Sign up to the first!</p>
+              <div className={css.linkGroup}>
+                <Link
+                  to={backLinkRef.current}
+                  className={css.NoParticipatnsGoBack}
+                >
+                  Go Back
+                </Link>
+                <Link
+                  to={`/events/${eventId}`}
+                  className={css.noParticipantsSignUpBtn}
+                >
+                  Sign up
+                </Link>
+              </div>
+            </div>
           )}
 
           {isLoading && (

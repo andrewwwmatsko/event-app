@@ -37,7 +37,11 @@ export default function Event({ event }) {
         >
           Register
         </Link>
-        <Link to={`/events/${event._id}/participants`} className={css.view}>
+        <Link
+          to={`/events/${event._id}/participants`}
+          state={location}
+          className={css.view}
+        >
           View
         </Link>
       </div>
