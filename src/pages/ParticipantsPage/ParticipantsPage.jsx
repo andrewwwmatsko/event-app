@@ -64,7 +64,7 @@ export default function ParticipantsPage() {
       <Section>
         <Container>
           <BackToButton to={`/events/${eventId}`}>
-            Back to Event registration
+            Go to Event registration
           </BackToButton>
           <h1 className={css.title}>Participants</h1>
 
