@@ -1,6 +1,12 @@
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
-import { useId } from "react";
+import { useId, useState } from "react";
+
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { TextField, InputAdornment } from "@mui/material";
+import dayjs from "dayjs";
 
 import { BsPersonFill } from "react-icons/bs";
 import { MdEmail } from "react-icons/md";
@@ -9,6 +15,8 @@ import { BiSolidCalendar } from "react-icons/bi";
 import css from "./RegistrationField.module.css";
 
 export default function RegistrationForm({ handleRegister }) {
+  const [birthDateValue, setBirthDateValue] = useState(dayjs());
+
   const fullNameId = useId();
   const emailId = useId();
   const dateOfBirthId = useId();
@@ -16,7 +24,7 @@ export default function RegistrationForm({ handleRegister }) {
   const initialValues = {
     fullName: "",
     email: "",
-    birthDate: "",
+    birthDate: birthDateValue,
     backgroundInfo: "Found myself",
   };
 
@@ -44,7 +52,6 @@ export default function RegistrationForm({ handleRegister }) {
   );
 
   const handleSubmit = (values, action) => {
-    console.log("handleSubmit ~ values:", values);
     handleRegister(values);
     action.resetForm();
   };
@@ -55,7 +62,7 @@ export default function RegistrationForm({ handleRegister }) {
       onSubmit={handleSubmit}
       validationSchema={registerSchema}
     >
-      {({ errors, touched }) => (
+      {({ errors, touched, setFieldValue, values }) => (
         <Form noValidate>
           <div className={css.group}>
             <label htmlFor={fullNameId} className={css.label}>
@@ -93,17 +100,35 @@ export default function RegistrationForm({ handleRegister }) {
             <label htmlFor={dateOfBirthId} className={css.label}>
               Date of birth
             </label>
-            <Field
-              type="date"
-              className={`${css.input} ${
-                errors.dateOfBirth && touched.dateOfBirth ? css.errorInput : ""
-              }`}
-              id={dateOfBirthId}
-              name="birthDate"
-              placeholder="2000-12-12"
-            />
-
-            <BiSolidCalendar size={24} className={css.icon} />
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DatePicker
+                value={values.birthDate}
+                onChange={(newValue) => {
+                  setBirthDateValue(newValue);
+                  setFieldValue("birthDate", newValue);
+                }}
+                textField={(params) => (
+                  <TextField
+                    {...params}
+                    className={`${css.input} ${
+                      errors.birthDate && touched.birthDate
+                        ? css.errorInput
+                        : ""
+                    }`}
+                    id={dateOfBirthId}
+                    name="birthDate"
+                    error={Boolean(errors.birthDate && touched.birthDate)}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <BiSolidCalendar size={24} className={css.icon} />
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                )}
+              />
+            </LocalizationProvider>
           </div>
 
           <div className={css.group}>
