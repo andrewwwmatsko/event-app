@@ -61,7 +61,7 @@ export default function RegisterPage() {
         const event = await getEventById(eventId);
         setEvent(event);
       } catch (error) {
-        if (error.status === 400) {
+        if (error.status === 400 || error.status === 404) {
           setIsInvalidIdError(true);
         } else {
           setIsServerError(true);

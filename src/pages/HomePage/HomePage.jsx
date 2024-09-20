@@ -6,9 +6,9 @@ import Stack from "@mui/material/Stack";
 import Container from "../../components/Container/Container.jsx";
 import Section from "../../components/Section/Section.jsx";
 import EventList from "../../components/EventList/EventList.jsx";
-import { fetchEvents } from "../../Api/events-api.js";
+import { fetchEvents, getEventByName } from "../../Api/events-api.js";
 import MySelect from "../../components/MySelect/MySelect.jsx";
-// import SearchBox from "../../components/SearchBox/SearchBox.jsx";
+import SearchBox from "../../components/SearchBox/SearchBox.jsx";
 import Loader from "../../components/Loader/Loader.jsx";
 
 import css from "./HomePage.module.css";
@@ -22,7 +22,8 @@ export default function HomePage() {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
-  // const [search, setSearch] = useState("");
+  const [search, setSearch] = useState("");
+  const [searchSubmit, setSearchSubmit] = useState("");
 
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -30,11 +31,15 @@ export default function HomePage() {
     setPage(value);
   };
 
-  // const handleSearch = (query) => {
-  //   setSearch(query);
-  // };
+  const handleSearchSubmit = (query) => {
+    setSearchSubmit(query);
+    setPage(1);
+    searchParams.delete("sortBy");
+    searchParams.delete("sortOrder");
+  };
 
   useEffect(() => {
+    if (search) return;
     const sortBy = searchParams.get("sortBy");
     const sortOrder = searchParams.get("sortOrder");
 
@@ -61,7 +66,34 @@ export default function HomePage() {
     getEvents();
 
     return () => clearTimeout(loadingTimeout);
-  }, [page, searchParams]);
+  }, [page, searchParams, search]);
+
+  useEffect(() => {
+    if (!searchSubmit) return;
+
+    let loadingTimeout;
+
+    const searchEvent = async () => {
+      try {
+        setIsError(false);
+        loadingTimeout = setTimeout(() => setIsLoading(true), 300);
+
+        const response = await getEventByName(searchSubmit, page);
+
+        setEvents(response.data);
+        setTotalPages(response.totalPages);
+      } catch (error) {
+        console.error(error.message);
+        setIsError(true);
+      } finally {
+        clearTimeout(loadingTimeout);
+        setIsLoading(false);
+      }
+    };
+    searchEvent();
+
+    return () => clearTimeout(loadingTimeout);
+  }, [searchSubmit, page]);
 
   return (
     <main>
@@ -69,7 +101,12 @@ export default function HomePage() {
         <Container>
           <div>
             <h1 className={css.pageTitle}>Events</h1>
-            {/* <SearchBox setSearch={setSearch} /> */}
+
+            <SearchBox
+              handleSearchSubmit={handleSearchSubmit}
+              setSearch={setSearch}
+              search={search}
+            />
 
             {events.length > 0 && !isLoading && !isError && (
               <>
@@ -78,6 +115,7 @@ export default function HomePage() {
                   page={page}
                   setSearchParams={setSearchParams}
                   searchParams={searchParams}
+                  setSearch={setSearch}
                 />
                 <EventList events={events} />
               </>
@@ -105,6 +143,7 @@ export default function HomePage() {
               onChange={handlePageChange}
               color="primary"
               sx={{
+                justifyContent: "center",
                 "& .Mui-selected": {
                   backgroundColor: "#151730",
                   color: "#fbf9ff",

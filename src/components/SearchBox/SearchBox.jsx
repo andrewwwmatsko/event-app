@@ -1,13 +1,25 @@
 import { IoSearchOutline } from "react-icons/io5";
 
 import css from "./SearchBox.module.css";
+import { useEffect, useState } from "react";
 
-export default function SearchBox({ setSearch }) {
+export default function SearchBox({ setSearch, search, handleSearchSubmit }) {
+  const [inputValue, setInputValue] = useState(search);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const inputValue = e.target.elements.search.value.trim();
-    setSearch(inputValue);
+    handleSearchSubmit(inputValue);
   };
+
+  const handleChange = (e) => {
+    setInputValue(e.target.value);
+    setSearch(e.target.value);
+  };
+
+  useEffect(() => {
+    setInputValue(search);
+  }, [search]);
 
   return (
     <div className={css.formWrapper}>
@@ -16,7 +28,9 @@ export default function SearchBox({ setSearch }) {
           type="text"
           name="search"
           className={css.input}
-          placeholder="Find event by name"
+          value={inputValue}
+          onChange={handleChange}
+          placeholder="Find event by its full name"
         />
         <div className={css.btnWrapper}>
           <button type="submit" className={css.submitBtn}>
