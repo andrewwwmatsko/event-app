@@ -33,3 +33,6 @@ You can register for your favorite events with ease, and it also provides the ab
 1. Clone the repository;
 2. Run `npm install`;
 3. Run `npm run dev`;
+
+
+if you wish to check my back-end part, you are welcome: https://github.com/andrewwwmatsko/elif-tech-BE
