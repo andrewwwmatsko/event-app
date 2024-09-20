@@ -11,7 +11,7 @@
   line-height: 48px;
   max-width: 253px;
   margin: 0 auto;
-  margin-bottom: 52px;
+  margin-bottom: 48px;
 }
 
 .searchWrapper {
@@ -56,7 +56,6 @@
   font-weight: 500;
 }
 .noParticipantsWrapper {
-  margin-top: 274px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -68,7 +67,6 @@
   font-size: 32px;
   font-weight: 700;
   line-height: 48px;
-  margin-bottom: 24px;
   max-width: 462px;
 }
 

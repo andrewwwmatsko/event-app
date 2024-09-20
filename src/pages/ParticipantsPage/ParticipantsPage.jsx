@@ -10,9 +10,12 @@ import Section from "../../components/Section/Section.jsx";
 import Container from "../../components/Container/Container.jsx";
 import ParticipantList from "../../components/ParticipantList/ParticipantList.jsx";
 
-import css from "./Participants.module.css";
 import BackToButton from "../../components/BackToButton/BackToButton.jsx";
 import PageNotFound from "../PageNotFound/PageNotFound.jsx";
+
+import noParticipantsImage from "../../images/noParticipantsImage.png";
+
+import css from "./Participants.module.css";
 
 export default function ParticipantsPage() {
   const [participants, setParticipants] = useState([]);
@@ -110,6 +113,14 @@ export default function ParticipantsPage() {
               <h2 className={css.noParticipantsTitle}>
                 There are no participants yet.
               </h2>
+
+              <img
+                src={noParticipantsImage}
+                alt="Baloons"
+                width={533}
+                height={355}
+              />
+
               <p className={css.noParticipantsText}>
                 It seems that people cannot dare to be the first. But we are
                 here to have fun and develop, so be the pioneer.

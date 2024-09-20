@@ -1,7 +1,8 @@
+import { useEffect, useState } from "react";
+
 import { IoSearchOutline } from "react-icons/io5";
 
 import css from "./SearchBox.module.css";
-import { useEffect, useState } from "react";
 
 export default function SearchBox({ setSearch, search, handleSearchSubmit }) {
   const [inputValue, setInputValue] = useState(search);
