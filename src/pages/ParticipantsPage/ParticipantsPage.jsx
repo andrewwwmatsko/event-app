@@ -5,8 +5,6 @@ import { Toaster } from "react-hot-toast";
 
 import { IoSearchOutline } from "react-icons/io5";
 
-import { failedToast } from "../../helpers/toasts.js";
-
 import Loader from "../../components/Loader/Loader.jsx";
 import Section from "../../components/Section/Section.jsx";
 import Container from "../../components/Container/Container.jsx";
@@ -14,13 +12,15 @@ import ParticipantList from "../../components/ParticipantList/ParticipantList.js
 
 import css from "./Participants.module.css";
 import BackToButton from "../../components/BackToButton/BackToButton.jsx";
+import PageNotFound from "../PageNotFound/PageNotFound.jsx";
 
 export default function ParticipantsPage() {
   const [participants, setParticipants] = useState([]);
   const [filteredParticipants, setFilteredParticipants] = useState([]);
 
   const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
+  const [isServerError, setIsServerError] = useState(false);
+  const [isInvalidIdError, setIsInvalidIdError] = useState(false);
 
   const [filter, setFilter] = useState("");
 
@@ -42,14 +42,18 @@ export default function ParticipantsPage() {
 
   useEffect(() => {
     const getParticipants = async () => {
-      setIsError(false);
+      setIsServerError(false);
+      setIsInvalidIdError(false);
       setIsLoading(true);
       try {
         const participants = await fetchParticipants(eventId);
         setParticipants(participants);
       } catch (error) {
-        failedToast(error.message);
-        setIsError(true);
+        if (error.status === 400) {
+          setIsInvalidIdError(true);
+        } else {
+          setIsServerError(true);
+        }
       } finally {
         setIsLoading(false);
       }
@@ -61,6 +65,10 @@ export default function ParticipantsPage() {
     if (Array.isArray(participants) && participants.length < 1) return;
     caseFilteredParticipants();
   }, [filter, caseFilteredParticipants, participants]);
+
+  if (isInvalidIdError) {
+    return <PageNotFound />;
+  }
 
   return (
     <main>
@@ -95,7 +103,7 @@ export default function ParticipantsPage() {
 
           {Array.isArray(participants) &&
           participants.length > 0 &&
-          !isError ? (
+          !isServerError ? (
             <ParticipantList participants={filteredParticipants} />
           ) : (
             <div className={css.noParticipantsWrapper}>
