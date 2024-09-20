@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 
 import { BiSolidCalendar } from "react-icons/bi";
@@ -106,6 +106,13 @@ export default function RegisterPage() {
                   </div>
 
                   <p className={css.description}>{event.description}</p>
+
+                  <Link
+                    to={`/events/${eventId}/participants`}
+                    className={css.checkParticipantsLink}
+                  >
+                    Check participants
+                  </Link>
                 </div>
 
                 <div className={css.formWrapper}>
