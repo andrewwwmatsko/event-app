@@ -24,7 +24,7 @@ export default function Event({ event }) {
       </div>
 
       <div className={css.info}>
-        <h2 className={css.title}>{cutText(event.title, 15)}</h2>
+        <h2 className={css.title}>{cutText(event.title, 30)}</h2>
 
         <p className={css.description}>{cutText(event.description, 100)}</p>
       </div>
