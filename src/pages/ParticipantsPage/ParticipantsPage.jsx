@@ -13,6 +13,7 @@ import Container from "../../components/Container/Container.jsx";
 import ParticipantList from "../../components/ParticipantList/ParticipantList.jsx";
 
 import css from "./Participants.module.css";
+import BackToButton from "../../components/BackToButton/BackToButton.jsx";
 
 export default function ParticipantsPage() {
   const [participants, setParticipants] = useState([]);
@@ -62,6 +63,9 @@ export default function ParticipantsPage() {
     <main>
       <Section>
         <Container>
+          <BackToButton to={`/events/${eventId}`}>
+            Back to Event registration
+          </BackToButton>
           <h1 className={css.title}>Participants</h1>
 
           {Array.isArray(participants) && participants.length > 0 && (

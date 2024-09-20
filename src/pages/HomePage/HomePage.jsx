@@ -8,7 +8,7 @@ import Section from "../../components/Section/Section.jsx";
 import EventList from "../../components/EventList/EventList.jsx";
 import { fetchEvents } from "../../Api/events-api.js";
 import MySelect from "../../components/MySelect/MySelect.jsx";
-import SearchBox from "../../components/SearchBox/SearchBox.jsx";
+// import SearchBox from "../../components/SearchBox/SearchBox.jsx";
 
 import css from "./HomePage.module.css";
 
@@ -20,7 +20,7 @@ export default function HomePage() {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
-  const [search, setSearch] = useState("");
+  // const [search, setSearch] = useState("");
 
   const [sortBy, setSortBy] = useState("");
   const [sortOrder, setSortOrder] = useState("");
@@ -29,9 +29,9 @@ export default function HomePage() {
     setPage(value);
   };
 
-  const handleSearch = (query) => {
-    setSearch();
-  };
+  // const handleSearch = (query) => {
+  //   setSearch();
+  // };
 
   useEffect(() => {
     const getEvents = async () => {
@@ -74,7 +74,7 @@ export default function HomePage() {
         <Container>
           <div>
             <h1 className={css.pageTitle}>Events</h1>
-            <SearchBox setSearch={setSearch} />
+            {/* <SearchBox setSearch={setSearch} /> */}
 
             {events.length > 0 && !isLoading && !isError && (
               <>

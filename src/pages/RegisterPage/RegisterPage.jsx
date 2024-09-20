@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { useLocation, useParams } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 
 import { BiSolidCalendar } from "react-icons/bi";
@@ -19,15 +19,15 @@ import RegistrationForm from "../../components/RegistrationForm/RegistrationForm
 import Icon from "../../icons/loudspeaker.svg";
 
 import css from "./RegisterPage.module.css";
+import BackToButton from "../../components/BackToButton/BackToButton.jsx";
 
 export default function RegisterPage() {
   const [event, setEvent] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
-  // const location = useLocation();
-
-  // const backLinfRef = useRef(location.state ?? "/events");
+  const location = useLocation();
+  const backLinkRef = useRef(location.state ?? "/");
 
   const { eventId } = useParams();
 
@@ -64,6 +64,8 @@ export default function RegisterPage() {
         <Container>
           {event && !isError && !isLoading && (
             <>
+              <BackToButton to={backLinkRef.current}>Back</BackToButton>
+
               <h1 className={css.pageTitle}>Event registration</h1>
 
               <div className={css.wrapper}>
@@ -77,11 +79,8 @@ export default function RegisterPage() {
                     </p>
                     <p className={css.time}>
                       <PiClockFill size={24} />
-                      Time:{" "}
-                      <span className={css.text}>
-                        {" "}
-                        {formatTime(event.date)}
-                      </span>
+                      Time:
+                      <span className={css.text}>{formatTime(event.date)}</span>
                     </p>
                     <p className={css.organizer}>
                       <img src={Icon} alt="icon" /> Organizer:
