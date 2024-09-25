@@ -21,6 +21,7 @@ export default function HomePage() {
 
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [notFoundSearch, setNotFoundSearch] = useState(false);
 
   const [search, setSearch] = useState("");
   const [searchSubmit, setSearchSubmit] = useState("");
@@ -40,6 +41,7 @@ export default function HomePage() {
 
   useEffect(() => {
     if (search) return;
+    if (searchSubmit) return;
     const sortBy = searchParams.get("sortBy");
     const sortOrder = searchParams.get("sortOrder");
 
@@ -47,6 +49,7 @@ export default function HomePage() {
 
     const getEvents = async () => {
       try {
+        setNotFoundSearch(false);
         setIsError(false);
         loadingTimeout = setTimeout(() => setIsLoading(true), 300);
 
@@ -55,7 +58,7 @@ export default function HomePage() {
         setEvents(response.data);
         setTotalPages(response.totalPages);
       } catch (error) {
-        console.error(error.message);
+        console.log(error);
         setIsError(true);
       } finally {
         clearTimeout(loadingTimeout);
@@ -66,7 +69,7 @@ export default function HomePage() {
     getEvents();
 
     return () => clearTimeout(loadingTimeout);
-  }, [page, searchParams, search]);
+  }, [page, searchParams, search, searchSubmit]);
 
   useEffect(() => {
     if (!searchSubmit) return;
@@ -75,6 +78,7 @@ export default function HomePage() {
 
     const searchEvent = async () => {
       try {
+        setNotFoundSearch(false);
         setIsError(false);
         loadingTimeout = setTimeout(() => setIsLoading(true), 300);
 
@@ -83,7 +87,10 @@ export default function HomePage() {
         setEvents(response.data);
         setTotalPages(response.totalPages);
       } catch (error) {
-        console.error(error.message);
+        if (error.status === 404) {
+          setNotFoundSearch(true);
+          return;
+        }
         setIsError(true);
       } finally {
         clearTimeout(loadingTimeout);
@@ -110,14 +117,20 @@ export default function HomePage() {
 
             {events.length > 0 && !isLoading && !isError && (
               <>
-                <MySelect
-                  setEvents={setEvents}
-                  page={page}
-                  setSearchParams={setSearchParams}
-                  searchParams={searchParams}
-                  setSearch={setSearch}
-                />
-                <EventList events={events} />
+                {!notFoundSearch && (
+                  <MySelect
+                    setSearchParams={setSearchParams}
+                    searchParams={searchParams}
+                    setSearch={setSearch}
+                    setPage={setPage}
+                    setSearchSubmit={setSearchSubmit}
+                  />
+                )}
+                {notFoundSearch && !isError && !isLoading ? (
+                  <h2 className={css.noSearchResults}>No results 😔</h2>
+                ) : (
+                  <EventList events={events} />
+                )}
               </>
             )}
           </div>
@@ -127,33 +140,35 @@ export default function HomePage() {
             </div>
           )}
 
-          <Stack
-            spacing={2}
-            sx={{
-              display: "block",
-              margin: "0 auto",
-              width: 400,
-              marginTop: "auto",
-            }}
-          >
-            <Pagination
-              count={totalPages}
-              variant="outlined"
-              page={page}
-              onChange={handlePageChange}
-              color="primary"
+          {!isLoading && !isError && !notFoundSearch && (
+            <Stack
+              spacing={2}
               sx={{
-                justifyContent: "center",
-                "& .Mui-selected": {
-                  backgroundColor: "#151730",
-                  color: "#fbf9ff",
-                  "&:hover": {
-                    backgroundColor: "#151730",
-                  },
-                },
+                display: "block",
+                margin: "0 auto",
+                width: 400,
+                marginTop: "auto",
               }}
-            />
-          </Stack>
+            >
+              <Pagination
+                count={totalPages}
+                variant="outlined"
+                page={page}
+                onChange={handlePageChange}
+                color="primary"
+                sx={{
+                  justifyContent: "center",
+                  "& .Mui-selected": {
+                    backgroundColor: "#151730",
+                    color: "#fbf9ff",
+                    "&:hover": {
+                      backgroundColor: "#151730",
+                    },
+                  },
+                }}
+              />
+            </Stack>
+          )}
         </Container>
       </Section>
     </main>
