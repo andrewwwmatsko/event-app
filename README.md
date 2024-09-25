@@ -2,7 +2,7 @@
 
 **Accomplished level:** MIDDLE
 
-*Keep in mind that the website uses a free backend resource, so it may take a while for the server to "wake up."*
+*Keep in mind that the website uses a free backend web-service hosting, so it may take a while for the server to "wake up."*
 
 ## 🎉 Upcoming Events Application
 
