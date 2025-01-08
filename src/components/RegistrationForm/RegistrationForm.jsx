@@ -108,7 +108,7 @@ export default function RegistrationForm({ handleRegister }) {
               label="Email"
               variant="outlined"
               value={values.email}
-              placeholder="iwanttoElifTechSchool@email.com"
+              placeholder="example@email.com"
               error={Boolean(errors.email && touched.email)}
               onChange={(e) => setFieldValue("email", e.target.value)}
               onBlur={() => {
